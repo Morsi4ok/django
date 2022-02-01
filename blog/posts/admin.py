@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from posts.models import Post, Tags, Comment
+from posts.models import Post, Tags
 
 
 @admin.register(Tags)
@@ -24,8 +24,4 @@ class PostAdmin(admin.ModelAdmin):
     inlines = (TagsAdminInline,)
 
 
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'post', 'created', 'active')
-    list_filter = ('active', 'created', 'updated')
-    search_fields = ('name', 'email', 'body')
+
