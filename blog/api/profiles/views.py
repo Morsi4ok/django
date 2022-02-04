@@ -1,18 +1,15 @@
-from rest_framework import viewsets
-from profiles.models import Profile
+from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin, ListModelMixin
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import GenericViewSet
 
 from api.profiles.serializers import ProfileModelSerializer
-from rest_framework.permissions import IsAuthenticated
+from profiles.models import Profile
 
 
-class ProfileViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
     """
-    API endpoint that allows posts to be viewed.
+    API endpoint that allows get or update users profile.
     """
-
     queryset = Profile.objects.all().order_by("-created_at")
     serializer_class = ProfileModelSerializer
     permission_classes = [IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
