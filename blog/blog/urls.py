@@ -17,18 +17,27 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
-from blog.views import register
-from posts.views import post_list, post_add, post_view
-from profiles.views import profiles_index
+from blog.views import register, sign_in, logout_view
+from posts import views
+from posts.views import posts_index_2, create_post, post_list, post_list_all
+from profiles.views import profiles_index, search_profile
+
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", post_list, name="home"),
-    path("post/<str:slug>/", post_view, name="post_view"),
-    path("posts/add/", post_add, name="post_add"),
-    path("profiles/", profiles_index, name="profiles_index"),
-    path("register/", register, name="register"),
+    path('admin/', admin.site.urls),
+    path('', post_list,),
+    path('index2/', posts_index_2,),
+    path('search_slug/', views.search_slug,),
+    path('search_title/', views.search_title),
+    path('search_posts/', views.search_user_posts),
+    path('profiles/', profiles_index, ),
+    path('profile_profile/', search_profile, ),
+    path('register/', register, name='register'),
+    path('auth/', sign_in, name="auth"),
+    path('post/', create_post, name="post_add"),
     path("api/", include("api.urls", namespace="api")),
+    path('logout/', logout_view, name='logout'),
+    path('posts/all/', post_list_all, name='posts_all'),
 ]
 
 

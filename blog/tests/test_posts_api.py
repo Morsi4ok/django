@@ -9,7 +9,7 @@ from posts.models import Post
 
 @pytest.mark.django_db
 class TestPostsApi:
-    def test_profiles_index_view(self):
+    def test_posts_index_view(self):
         client = Client()
 
         user = User.objects.create(username="test", email="test@test.com", password="test")
