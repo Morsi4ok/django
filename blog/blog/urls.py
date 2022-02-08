@@ -21,13 +21,14 @@ from blog.views import register, sign_in, logout_view
 from posts import views
 from posts.views import posts_index_2, create_post, post_list, post_list_all
 from profiles.views import profiles_index, search_profile
-
+from shop.views import product_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', post_list,),
-    path('index2/', posts_index_2,),
-    path('search_slug/', views.search_slug,),
+    path('', post_list, ),
+    path("products/", product_list, name="product_list"),
+    path('index2/', posts_index_2, ),
+    path('search_slug/', views.search_slug, ),
     path('search_title/', views.search_title),
     path('search_posts/', views.search_user_posts),
     path('profiles/', profiles_index, ),
@@ -39,7 +40,6 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('posts/all/', post_list_all, name='posts_all'),
 ]
-
 
 if settings.DEBUG:
     from django.conf.urls.static import static
