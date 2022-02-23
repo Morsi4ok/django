@@ -24,6 +24,7 @@ from profiles.views import profiles_index, search_profile
 from shop.views import product_list
 
 urlpatterns = [
+    path("admin/django-rq/", include("django_rq.urls")),
     path('admin/', admin.site.urls),
     path('', post_list, ),
     path("products/", product_list, name="product_list"),

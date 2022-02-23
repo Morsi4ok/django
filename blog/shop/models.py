@@ -10,7 +10,9 @@ STATUS_CHOICES = (
 class Product(models.Model):
     title = models.CharField(max_length=200)
     cost = models.IntegerField()
+    link = models.URLField(null=True, blank=True)
     image = models.ImageField(blank=True, null=True)
+    description = models.TextField(null=True, blank=True)
     status = models.CharField(
         max_length=100, choices=STATUS_CHOICES, default="IS"
     )
