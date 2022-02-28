@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-sq5ga#jl1_u^k^_ya9-f9y-+z^7t*6h!4v_#qp_^w*r2osf-vg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'crispy_forms',
     'crispy_bootstrap5',
     'django_rq',
@@ -91,14 +92,14 @@ DATABASES = {
         "NAME": "django",
         "USER": "django",
         "PASSWORD": "django",
-        "HOST": "localhost",
+        "HOST": os.getenv("POSTGRES_HOST", "localhost"),
         "PORT": 5432,
     }
 }
 
 RQ_QUEUES = {
    "default": {
-       "HOST": "localhost",
+       "HOST": os.getenv("POSTGRES_HOST", "localhost"),
        "PORT": 6379,
        "DB": 0,
        "DEFAULT_TIMEOUT": 360,
@@ -156,9 +157,6 @@ MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'logout'
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -175,8 +173,21 @@ LOGGING = {
         "handlers": ["console", "file"],
         "level": "INFO",
     },
+    "scrapy.core.scraper": {
+        "handlers": [],
+        "level": "ERROR",
+    },
     "django.db.backends": {
         "handlers": ["console"],
         "level": "ERROR",
     },
+}
+
+REST_FRAMEWORK = {
+   "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+   "DEFAULT_AUTHENTICATION_CLASSES": [
+       "rest_framework.authentication.BasicAuthentication",
+       "rest_framework.authentication.SessionAuthentication",
+   ],
+   "PAGE_SIZE": 10,
 }
