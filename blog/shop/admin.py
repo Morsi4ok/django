@@ -9,8 +9,8 @@ class PurchaseInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["title", "cost", "status"]
-    search_fields = ("title",)
+    list_display = ["title", "external_id", "cost", "status"]
+    search_fields = ["title"]
     inlines = [
         PurchaseInline,
     ]

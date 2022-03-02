@@ -1,8 +1,8 @@
 from rest_framework import viewsets
-from api.posts.serializers import PostModelSerializer
-
-from posts.models import Post
 from rest_framework.permissions import IsAuthenticated
+
+from api.posts.serializers import PostModelSerializer
+from posts.models import Post
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -16,4 +16,3 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-

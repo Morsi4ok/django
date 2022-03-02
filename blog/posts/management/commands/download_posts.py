@@ -1,20 +1,19 @@
-import logging
-
 import csv
 
+import requests
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
 from posts.models import Post
 
-logger = logging.getLogger(__name__)
-
 
 class Command(BaseCommand):
-    help = "Print posts"
+    help = "Download CSV and create posts"
 
     def handle(self, *args, **options):
+        r = requests.get("https://github.com/Morsi4ok/django/blob/master/blog/posts.csv")
+        open(settings.BASE_DIR / "posts.csv", "wb").write(r.content)
         with open(settings.BASE_DIR / "posts.csv", "r") as file:
             reader = csv.reader(file)
             for row in reader:
