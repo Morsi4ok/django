@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-sq5ga#jl1_u^k^_ya9-f9y-+z^7t*6h!4v_#qp_^w*r2osf-vg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "django",
-        "USER": "django",
-        "PASSWORD": "django",
+        "NAME": os.getenv("POSTGRES_NAME", "django"),
+        "USER": os.getenv("POSTGRES_USER", "django"),
+        "PASSWORD": os.getenv("POSTGRES_PASS", "django"),
         "HOST": os.getenv("POSTGRES_HOST", "localhost"),
         "PORT": 5432,
     }
@@ -99,7 +99,7 @@ DATABASES = {
 
 RQ_QUEUES = {
    "default": {
-       "HOST": os.getenv("POSTGRES_HOST", "localhost"),
+       "HOST": os.getenv("REDIS_HOST", "localhost"),
        "PORT": 6379,
        "DB": 0,
        "DEFAULT_TIMEOUT": 360,
